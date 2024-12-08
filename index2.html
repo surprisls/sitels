@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Surprise</title>
+    <link rel="stylesheet" href="index2.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div id="background"></div> <!-- L'élément pour l'arrière-plan -->
+
+    <div id="resultContainer" style="display: none; padding: 20px; color: white; font-size: 1.5em; text-align: center; border-radius: 10px;">
+        <!-- Le contenu sera mis à jour dynamiquement -->
+    </div>
+    
+
+
+    <h1>Quiz spécial 🎉</h1>
+    <p>Réponds aux 10 questions pour découvrir ta surprise !</p>
+
+    <!-- Affichage du temps restant -->
+    <div id="timer">30</div>
+
+    <!-- Zone des questions -->
+    <div id="quizContainer">
+        <p id="question"></p>
+        <div id="answers">
+            <button class="answerButton" id="answer1"></button>
+            <button class="answerButton" id="answer2"></button>
+            <button class="answerButton" id="answer3"></button>
+            <button class="answerButton" id="answer4"></button>
+        </div>
+    </div>
+
+        <!-- Zone de message de fin -->
+    <div id="finalMessage" style="display: none; padding: 20px; text-align: center;"></div>
+
+        <!-- Zone du quiz -->
+    <div id="quizContainer">
+        <!-- Contenu du quiz ici -->
+    </div>
+
+
+<!-- Zone de message de fin -->
+<div id="finalMessage" style="display: none; padding: 20px; text-align: center;"></div>
+
+<!-- Zone du décompte (visible uniquement si le score est inférieur à 8) -->
+<div id="countdownContainer" style="display: none; text-align: center; font-size: 2em;">
+    <p>Le quiz va recommencer dans <span id="countdown">15</span> secondes...</p>
+</div>
+
+<button id="restartButton" style="display:none" onclick="restartQuiz()">Recommencer</button>
+<button id="accessButton" style="display:none;">Accéder à la suite</button>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Message final -->
+    <div id="finalMessage" style="display:none;">
+        <h2>Félicitations, tu as terminé le quiz ! 🎉</h2>
+        <button onclick="showSurprise()">Découvrir ta surprise</button>
+    </div>
+
+    <script src="index2.js"></script>
+</body>
+</html>
