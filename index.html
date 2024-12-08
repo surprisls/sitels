@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Surprise</title>
+    <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div id="background"></div> <!-- L'élément pour l'arrière-plan -->
+
+    <div class="intro-container">
+        <h1>Salut Lylia !</h1>
+        <p>Pour ton anniversaire, je t'ai codé un petit site avec un jeu intégré. Voici les règles :</p>
+        <ul>
+            <li class="quiz-item"><strong>Règle 1 :</strong> Pour déverrouiller la page principale, entre le mot de passe <strong>"230522"</strong>.</li>
+            <li class="quiz-item"><strong>Règle 2 :</strong> Pour accéder à ta surprise, tu dois absolument terminer le jeu.</li>
+            <li class="quiz-item"><strong>Règle 3 :</strong> Tu dois être motivée et souriante durant le jeu ! 😊</li>
+        </ul>
+
+        <section>
+            <h2>Entrez le mot de passe :</h2>
+            <input type="password" id="passwordInput" placeholder="Mot de passe" />
+            <button id="unlockButton">Déverrouiller</button>
+        </section>
+
+        <div id="gameSection" style="display: none;">
+            <h3>Bravo, tu as déverrouillé la page principale ! Maintenant, c'est l'heure du jeu !</h3>
+            <button id="gameButton">Accéder au jeu !</button>
+        </div>
+    </div>
+
+    <!-- Lien vers le fichier JavaScript -->
+    <script src="index.js"></script>
+
+</body>
+</html>

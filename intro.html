@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction au Quiz</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div id="background"></div> <!-- L'élément pour l'arrière-plan -->
+
+    <div class="intro-container">
+        <h1>Bienvenue dans ton Quiz d'AAnniversaire ! 🎉</h1>
+        <p>Salut Madame, ce quiz est un petit challenge que je t'ai préparé pour ton anniversaire !</p>
+        <p>J'texplique le délire avant que ça commence :</p>
+        <ul>
+            <li class="quiz-item">Réponds aux 10 questions pour tester tes connaissances (T'inquiète c'est que des questions sur nous) !</li>
+            <li class="quiz-item">Chaque question a un compte à rebours de 30 secondes.</li>
+            <li class="quiz-item">Pour gagner, il faut que tu obtiennes un score de minimum 9/10.</li>
+        </ul>
+        <p>Es-tu prête à relever le défi ?</p>
+        <button onclick="startQuiz()">Je veux commencer le quiz !</button>
+        <br><br>
+        <button onclick="cancelQuiz()">Non, je ne veux pas commencer le quiz</button>
+    </div>
+
+    <script>
+        // Fonction pour démarrer le quiz en redirigeant vers la page de quiz
+        function startQuiz() {
+            window.location.href = "index2.html";  // Redirection vers le quiz
+        }
+
+        // Fonction pour annuler et retourner à la page d'accueil (index.html)
+        function cancelQuiz() {
+            window.location.href = "index.html";  // Redirection vers la page d'accueil
+        }
+    </script>
+
+</body>
+</html>
