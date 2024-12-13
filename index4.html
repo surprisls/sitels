@@ -3,122 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyeux Anniversaire !</title>
+    <title>Jeu de Coeur</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.4/brython.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #ffe4e1;
             color: #333;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
         }
         canvas {
+            display: block;
+            margin: 20px auto;
             background-color: white;
             border: 1px solid #000;
         }
-        .hidden {
-            display: none;
-        }
-        button {
-            background-color: #ff69b4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #ff85c2;
-        }
-        #game-container {
-            margin-top: 30px;
-        }
-        #message {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        #reward {
-            margin-top: 30px;
-        }
     </style>
 </head>
-<body>
-    <h1>Joyeux Anniversaire, Mon Amour !</h1>
-    <p>Un petit jeu pour te faire sourire. Aide le cœur à atteindre le cadeau !</p>
+<body onload="brython()">
+    <h1>Jeu de Cœur</h1>
+    <p>Utilise les flèches pour contrôler le cœur et attrape les cœurs dorés !</p>
 
     <canvas id="gameCanvas" width="400" height="400"></canvas>
 
-    <p id="message" class="hidden">Bravo ! Tu as gagné 🎉 Voici ta surprise :</p>
-    <div id="reward" class="hidden">
-        <img src="https://via.placeholder.com/300x200.png?text=Je+T%27Aime!" alt="Surprise romantique">
-    </div>
+    <script type="text/python">
+from browser import document, window, timer
+import random
 
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
+# Configuration
+canvas = document["gameCanvas"]
+ctx = canvas.getContext("2d")
 
-        const heart = { x: 50, y: 50, size: 20, color: 'red' };
-        const gift = { x: 300, y: 300, size: 30, color: 'gold' };
-        const speed = 5;
+# Variables du jeu
+cell_size = 20
+width, height = canvas.width, canvas.height
+heart = [(5, 5)]  # Le cœur commence ici
+direction = "RIGHT"  # Direction initiale
+food = (10, 10)  # Position initiale de la nourriture
+score = 0
 
-        let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+def draw_cell(x, y, color):
+    """Dessine une cellule."""
+    ctx.fillStyle = color
+    ctx.fillRect(x * cell_size, y * cell_size, cell_size - 2, cell_size - 2)
 
-        function drawHeart() {
-            ctx.fillStyle = heart.color;
-            ctx.beginPath();
-            ctx.moveTo(heart.x, heart.y);
-            ctx.arc(heart.x - 10, heart.y, 10, Math.PI, 0, true);
-            ctx.arc(heart.x + 10, heart.y, 10, Math.PI, 0, true);
-            ctx.lineTo(heart.x, heart.y + 20);
-            ctx.closePath();
-            ctx.fill();
-        }
+def draw():
+    """Met à jour l'affichage."""
+    ctx.clearRect(0, 0, width, height)
 
-        function drawGift() {
-            ctx.fillStyle = gift.color;
-            ctx.fillRect(gift.x, gift.y, gift.size, gift.size);
-        }
+    # Dessine la nourriture
+    draw_cell(food[0], food[1], "gold")
 
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+    # Dessine le cœur
+    for segment in heart:
+        draw_cell(segment[0], segment[1], "red")
 
-        function update() {
-            if (keys.ArrowUp && heart.y > 0) heart.y -= speed;
-            if (keys.ArrowDown && heart.y < canvas.height - heart.size) heart.y += speed;
-            if (keys.ArrowLeft && heart.x > 0) heart.x -= speed;
-            if (keys.ArrowRight && heart.x < canvas.width - heart.size) heart.x += speed;
+    # Affiche le score
+    ctx.font = "16px Arial"
+    ctx.fillStyle = "black"
+    ctx.fillText(f"Score: {score}", 10, 20)
 
-            if (
-                heart.x < gift.x + gift.size &&
-                heart.x + heart.size > gift.x &&
-                heart.y < gift.y + gift.size &&
-                heart.y + heart.size > gift.y
-            ) {
-                document.getElementById('message').classList.remove('hidden');
-                document.getElementById('reward').classList.remove('hidden');
-                clearInterval(gameLoop);
-            }
-        }
+def move():
+    """Déplace le cœur."""
+    global food, score
 
-        function gameLoop() {
-            clearCanvas();
-            drawGift();
-            drawHeart();
-            update();
-        }
+    # Nouvelle position de la tête
+    head_x, head_y = heart[0]
+    if direction == "UP":
+        head_y -= 1
+    elif direction == "DOWN":
+        head_y += 1
+    elif direction == "LEFT":
+        head_x -= 1
+    elif direction == "RIGHT":
+        head_x += 1
 
-        window.addEventListener('keydown', (e) => {
-            if (keys.hasOwnProperty(e.key)) keys[e.key] = true;
-        });
+    # Vérifie les collisions
+    if (
+        head_x < 0 or head_x >= width // cell_size or
+        head_y < 0 or head_y >= height // cell_size or
+        (head_x, head_y) in heart
+    ):
+        timer.clear_interval(game_loop)
+        ctx.font = "24px Arial"
+        ctx.fillStyle = "black"
+        ctx.fillText("Game Over!", width // 2 - 60, height // 2)
+        return
 
-        window.addEventListener('keyup', (e) => {
-            if (keys.hasOwnProperty(e.key)) keys[e.key] = false;
-        });
+    # Ajoute la nouvelle tête
+    heart.insert(0, (head_x, head_y))
 
-        const gameLoopInterval = 1000 / 60;
-        const gameLoop = setInterval(gameLoop, gameLoopInterval);
+    # Mange la nourriture
+    if (head_x, head_y) == food:
+        score += 1
+        food = (random.randint(0, (width // cell_size) - 1), random.randint(0, (height // cell_size) - 1))
+    else:
+        heart.pop()  # Supprime le dernier segment
+
+    draw()
+
+def change_direction(event):
+    """Change la direction du cœur."""
+    global direction
+    key = event.key
+    if key == "ArrowUp" and direction != "DOWN":
+        direction = "UP"
+    elif key == "ArrowDown" and direction != "UP":
+        direction = "DOWN"
+    elif key == "ArrowLeft" and direction != "RIGHT":
+        direction = "LEFT"
+    elif key == "ArrowRight" and direction != "LEFT":
+        direction = "RIGHT"
+
+# Écoute les touches
+window.bind("keydown", change_direction)
+
+# Boucle de jeu
+game_loop = timer.set_interval(move, 150)
     </script>
 </body>
 </html>
