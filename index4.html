@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire !</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe4e1;
+            color: #333;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #ff85c2;
+        }
+        #game-container {
+            margin-top: 30px;
+        }
+        #message {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #reward {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Joyeux Anniversaire, Mon Amour !</h1>
+    <p>Un petit jeu pour te faire sourire. Aide le cœur à atteindre le cadeau !</p>
+
+    <canvas id="gameCanvas" width="400" height="400" style="border:1px solid #000;"></canvas>
+
+    <p id="message" class="hidden">Bravo ! Tu as gagné 🎉 Voici ta surprise :</p>
+    <div id="reward" class="hidden">
+        <img src="https://via.placeholder.com/300x200.png?text=Je+T%27Aime!" alt="Surprise romantique">
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const heart = { x: 50, y: 50, size: 20, color: 'red' };
+        const gift = { x: 300, y: 300, size: 30, color: 'gold' };
+        const speed = 5;
+
+        let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+
+        function drawHeart() {
+            ctx.fillStyle = heart.color;
+            ctx.beginPath();
+            ctx.moveTo(heart.x, heart.y);
+            ctx.arc(heart.x - 10, heart.y, 10, Math.PI, 0, true);
+            ctx.arc(heart.x + 10, heart.y, 10, Math.PI, 0, true);
+            ctx.lineTo(heart.x, heart.y + 20);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawGift() {
+            ctx.fillStyle = gift.color;
+            ctx.fillRect(gift.x, gift.y, gift.size, gift.size);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function update() {
+            if (keys.ArrowUp && heart.y > 0) heart.y -= speed;
+            if (keys.ArrowDown && heart.y < canvas.height - heart.size) heart.y += speed;
+            if (keys.ArrowLeft && heart.x > 0) heart.x -= speed;
+            if (keys.ArrowRight && heart.x < canvas.width - heart.size) heart.x += speed;
+
+            if (
+                heart.x < gift.x + gift.size &&
+                heart.x + heart.size > gift.x &&
+                heart.y < gift.y + gift.size &&
+                heart.y + heart.size > gift.y
+            ) {
+                document.getElementById('message').classList.remove('hidden');
+                document.getElementById('reward').classList.remove('hidden');
+                clearInterval(gameLoop);
+            }
+        }
+
+        function gameLoop() {
+            clearCanvas();
+            drawGift();
+            drawHeart();
+            update();
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (keys.hasOwnProperty(e.key)) keys[e.key] = true;
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (keys.hasOwnProperty(e.key)) keys[e.key] = false;
+        });
+
+        const gameLoopInterval = 1000 / 60;
+        const gameLoop = setInterval(gameLoop, gameLoopInterval);
+    </script>
+</body>
+</html>
