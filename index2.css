@@ -1,313 +1,154 @@
-/* Style de la page du quiz */
+/* Style général */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    text-align: center;
-    padding: 20px;
-}
-
-h1 {
-    color: #333;
-    font-size: 2em;
-}
-
-#quizContainer {
-    margin-top: 30px;
-}
-
-#timer {
-    font-size: 2em;
-    color: red;
-    font-weight: bold;
-}
-
-#answers {
-    margin-top: 20px;
-}
-
-.answerButton {
-    background-color: #dcdcdc; /* Gris par défaut */
-    color: #000;
-    font-size: 1em;
-    padding: 15px;
-    margin: 10px;
-    border: none;
-    cursor: pointer;
-    width: 200px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease; /* Ajout d'une transition douce pour les couleurs */
-}
-
-/* Style des boutons au survol */
-.answerButton:hover {
-    background-color: #45a049;
-}
-
-#finalMessage {
-    font-size: 1.5em;
-    color: #28a745;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
-    font-size: 1em;
-    padding: 15px 25px;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-/* Style de base */
-body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    position: relative;
+    background-color: #f9f9f9;
+    color: #333;
     text-align: center;
-    background-color: #f0f0f0; /* Couleur de fond par défaut */
-    color: #000; /* Texte par défaut en noir */
-    overflow-x: hidden; /* Empêche le défilement horizontal */
-    height: 100vh; /* Assure que le corps de la page occupe toute la hauteur de la fenêtre */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-/* L'élément pour l'arrière-plan */
+/* L'élément pour l'arrière-plan flou */
 #background {
-    position: fixed; /* Positionné de manière fixe à l'arrière */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('image.jpg') no-repeat center center fixed; /* L'image d'arrière-plan */
+    background: url('image.jpg') no-repeat center center fixed; /* Image existante */
     background-size: cover;
-    filter: blur(10px); /* Applique un flou à l'arrière-plan */
-    z-index: -1; /* Placer l'arrière-plan derrière tout le contenu */
+    filter: blur(10px); /* Flou de l'arrière-plan */
+    z-index: -1; /* Met le fond derrière tout le contenu */
+    opacity: 0.8; /* Rend le fond légèrement transparent */
 }
 
-/* Classe pour centrer le texte verticalement et horizontalement */
-.center-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%; /* Remplir l'écran entier */
-    text-align: center;
-}
-
-/* Conteneur principal pour les pages (sans fond blanc) */
-.intro-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre légère pour les conteneurs */
+/* Conteneur principal */
+#quizContainer {
+    background: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+    backdrop-filter: blur(5px); /* Effet de flou pour un look moderne */
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 700px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre douce */
+    animation: slideIn 1s ease-in-out;
+    margin-bottom: 20px; /* Enlève toute barre blanche supplémentaire */
 }
 
 /* Titres */
-h1, h2, h3 {
+h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre derrière les titres */
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Paragraphe */
-p {
-    font-size: 1.5em;
-    line-height: 1.6;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Ombre derrière le texte des paragraphes */
+#timer {
+    font-size: 1.8em;
+    color: #ff4757;
+    font-weight: bold;
+    margin: 15px 0;
 }
 
-/* Listes sans puces par défaut */
-ul {
-    text-align: left;
-    font-size: 1.5em;
-    margin: 20px 0;
-    padding-left: 0;
-    list-style-type: none;
+/* Conteneur des réponses */
+#answers {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
 }
 
-/* Personnalisation des éléments de la liste */
-.quiz-item {
-    margin-bottom: 15px;
-    line-height: 1.8;
+/* Boutons de réponse */
+.answerButton {
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Dégradé violet/bleu */
+    color: white;
+    font-size: 1.1em;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    width: 220px;
 }
 
-/* Boutons */
+.answerButton:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb); /* Inverse le dégradé au survol */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Conteneur des résultats */
+#resultContainer {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+    border-radius: 15px;
+    color: #333;
+    font-size: 1.4em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Bouton principal */
 button {
     padding: 10px 20px;
     font-size: 1.2em;
-    background-color: #4CAF50;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
     color: white;
     border: none;
     cursor: pointer;
-    margin-top: 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre légère pour les boutons */
+    border-radius: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.3s;
 }
 
 button:hover {
-    background-color: #45a049;
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    transform: translateY(-3px);
 }
 
-/* Mise en page du formulaire de mot de passe */
-input[type="password"] {
-    padding: 10px;
-    font-size: 1em;
-    margin: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère pour l'input */
-}
-
-/* Section de jeu (initialement cachée) */
-#gameSection {
-    margin-top: 30px;
-    display: none;
-}
-
-/* Style pour les sections de jeu */
-#gameSection h3 {
-    font-size: 1.5em;
-    color: #28a745;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Ombre pour le titre de la section jeu */
-}
-
-/* Modification du style pour les liens */
+/* Liens */
 a {
     text-decoration: none;
-    color: #4CAF50;
+    color: #2575fc;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #6a11cb;
 }
 
-
-
-
-#resultContainer {
-    display: none; /* Initialement caché */
-    padding: 20px;
-    color: white;
-    font-size: 1.5em;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 20px;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-
-
-/* Style de base pour les boutons de réponse */
-.answerButton {
-    background-color: #dcdcdc; /* Gris par défaut */
-    color: #000;
-    font-size: 1em;
-    padding: 15px;
-    margin: 10px;
-    border: none;
-    cursor: pointer;
-    width: 200px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease; /* Transition pour la couleur de fond */
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
-
-/* Au survol */
-.answerButton:hover {
-    background-color: #45a049;
-}
-
-/* Style pour les bonnes réponses */
-.correctAnswer {
-    background-color: #28a745; /* Vert */
-    color: white;
-}
-
-/* Style pour les mauvaises réponses */
-.incorrectAnswer {
-    background-color: #dc3545; /* Rouge */
-    color: white;
-}
-
-/* Conteneur pour afficher les résultats */
-#resultContainer {
-    display: none; /* Initialement caché */
-    padding: 20px;
-    color: white;
-    font-size: 1.5em;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease; /* Transition de fond */
-}
-
-/* Styles pour les réponses correctes */
-.correctAnswer {
-    background-color: #28a745; /* Vert */
-    color: white;
-}
-
-/* Styles pour les réponses incorrectes */
-.incorrectAnswer {
-    background-color: #dc3545; /* Rouge */
-    color: white;
-}
-
-/* Icônes */
-.fas.fa-check-circle {
-    color: white;
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-.fas.fa-times-circle {
-    color: white;
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-#restartButtonContainer {
-    display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-    height: 100vh; /* Occupe toute la hauteur de l'écran */
-    text-align: center; /* Assure que le texte du bouton est centré */
-}
-
-#restartButton {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-#restartButton:hover {
-    background-color: #0056b3;
-}
-
-#accessButton {
-    display: block;
-    margin: 20px auto; /* Centrer le bouton avec une marge autour */
-    padding: 10px 20px;
-    background-color: #28a745; /* Couleur du bouton */
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    width: 200px; /* Largeur du bouton */
-}
-
-#accessButton:hover {
-    background-color: #218838; /* Couleur lorsque le bouton est survolé */
-}
-

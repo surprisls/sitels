@@ -3,125 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu de Coeur</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.4/brython.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #ffe4e1;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        canvas {
-            display: block;
-            margin: 20px auto;
-            background-color: white;
-            border: 1px solid #000;
-        }
-    </style>
+    <title>Brief avant la surprise</title>
+    <link rel="stylesheet" href="index.css">
 </head>
-<body onload="brython()">
-    <h1>Jeu de Cœur</h1>
-    <p>Utilise les flèches pour contrôler le cœur et attrape les cœurs dorés !</p>
+<body>
 
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div id="background"></div> <!-- L'élément pour l'arrière-plan -->
 
-    <script type="text/python">
-from browser import document, window, timer
-import random
+    <div class="intro-container">
+        <h1>Petite consigne importante</h1>
+        <p>Avant de cliquer sur les boutons ci-dessous viens me voir sur Snap, j'ai quelques indications à te donner ;)</p>
 
-# Configuration
-canvas = document["gameCanvas"]
-ctx = canvas.getContext("2d")
+        <p>Est-ce que tu as compris les consignes ?</p>
+        <button onclick="startQuiz()">J'ai compris les consignes, let's go</button>
+        <br><br>
+        <button onclick="cancelQuiz()">J'ai rien compris je suis totalement plouké</button>
+    </div>
 
-# Variables du jeu
-cell_size = 20
-width, height = canvas.width, canvas.height
-heart = [(5, 5)]  # Le cœur commence ici
-direction = "RIGHT"  # Direction initiale
-food = (10, 10)  # Position initiale de la nourriture
-score = 0
+    <script>
+        // Fonction pour démarrer le quiz en ouvrant la vidéo dans un nouvel onglet
+        function startQuiz() {
+            window.open("https://youtu.be/i5czh64pFMg?si=KiJtbp6Z1lXmXRcW", "_blank"); // Ouvre dans un nouvel onglet
+        }
 
-def draw_cell(x, y, color):
-    """Dessine une cellule."""
-    ctx.fillStyle = color
-    ctx.fillRect(x * cell_size, y * cell_size, cell_size - 2, cell_size - 2)
-
-def draw():
-    """Met à jour l'affichage."""
-    ctx.clearRect(0, 0, width, height)
-
-    # Dessine la nourriture
-    draw_cell(food[0], food[1], "gold")
-
-    # Dessine le cœur
-    for segment in heart:
-        draw_cell(segment[0], segment[1], "red")
-
-    # Affiche le score
-    ctx.font = "16px Arial"
-    ctx.fillStyle = "black"
-    ctx.fillText(f"Score: {score}", 10, 20)
-
-def move():
-    """Déplace le cœur."""
-    global food, score
-
-    # Nouvelle position de la tête
-    head_x, head_y = heart[0]
-    if direction == "UP":
-        head_y -= 1
-    elif direction == "DOWN":
-        head_y += 1
-    elif direction == "LEFT":
-        head_x -= 1
-    elif direction == "RIGHT":
-        head_x += 1
-
-    # Vérifie les collisions
-    if (
-        head_x < 0 or head_x >= width // cell_size or
-        head_y < 0 or head_y >= height // cell_size or
-        (head_x, head_y) in heart
-    ):
-        timer.clear_interval(game_loop)
-        ctx.font = "24px Arial"
-        ctx.fillStyle = "black"
-        ctx.fillText("Game Over!", width // 2 - 60, height // 2)
-        return
-
-    # Ajoute la nouvelle tête
-    heart.insert(0, (head_x, head_y))
-
-    # Mange la nourriture
-    if (head_x, head_y) == food:
-        score += 1
-        food = (random.randint(0, (width // cell_size) - 1), random.randint(0, (height // cell_size) - 1))
-    else:
-        heart.pop()  # Supprime le dernier segment
-
-    draw()
-
-def change_direction(event):
-    """Change la direction du cœur."""
-    global direction
-    key = event.key
-    if key == "ArrowUp" and direction != "DOWN":
-        direction = "UP"
-    elif key == "ArrowDown" and direction != "UP":
-        direction = "DOWN"
-    elif key == "ArrowLeft" and direction != "RIGHT":
-        direction = "LEFT"
-    elif key == "ArrowRight" and direction != "LEFT":
-        direction = "RIGHT"
-
-# Écoute les touches
-window.bind("keydown", change_direction)
-
-# Boucle de jeu
-game_loop = timer.set_interval(move, 150)
+        // Fonction pour annuler et retourner à la page d'accueil (index5.html) dans un nouvel onglet
+        function cancelQuiz() {
+            window.open("index5.html", "_blank"); // Ouvre dans un nouvel onglet
+        }
     </script>
+
 </body>
 </html>
